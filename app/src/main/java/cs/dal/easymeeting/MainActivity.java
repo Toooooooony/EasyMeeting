@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements
                     loadFragment(new NotificationFragment());
                     return true;
             }
+            
             return false;
         }
     };
