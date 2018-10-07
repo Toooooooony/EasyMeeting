@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements
                 case R.id.navigation_notifications:
                     toolbar.setTitle("Notifications");
                     loadFragment(new NotificationFragment());
-
                     return true;
             }
             return false;
