@@ -26,7 +26,13 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".PastCreatedMeetingDetailActivity" />
+        <activity android:name=".EditMeetingActivity" />
+        <activity android:name=".PendingCreatedMeetingDetailActivity" />
+        <activity android:name=".CreateMeetingActivity" />
+        <activity android:name=".PastInvitedMeetingDetailActivity" />
+        <activity android:name=".PendingInvitedMeetingDetailActivity"></activity>
     </application>
 
 </manifest>
