@@ -1,6 +1,8 @@
 package cs.dal.easymeeting;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,8 +16,8 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements
         HomeFragment.OnFragmentInteractionListener,
-        DashboardFragment.OnFragmentInteractionListener,
-        NotificationFragment.OnFragmentInteractionListener{
+        HostFragment.OnFragmentInteractionListener,
+        AnalyticsFragment.OnFragmentInteractionListener{
 
     private ActionBar toolbar;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -25,16 +27,19 @@ public class MainActivity extends AppCompatActivity implements
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    toolbar.setTitle("Home");
+                    toolbar.setTitle("Meeting Schedule");
+                    toolbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#D74E09")));
                     loadFragment(new HomeFragment());
                     return true;
-                case R.id.navigation_dashboard:
-                    toolbar.setTitle("Dashboard");
-                    loadFragment(new DashboardFragment());
+                case R.id.navigation_host:
+                    toolbar.setTitle("Meeting Manager");
+                    loadFragment(new HostFragment());
+                    toolbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#424242")));
                     return true;
-                case R.id.navigation_notifications:
-                    toolbar.setTitle("Notifications");
-                    loadFragment(new NotificationFragment());
+                case R.id.navigation_analytics:
+                    toolbar.setTitle("Analytics");
+                    toolbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#D74E09")));
+                    loadFragment(new AnalyticsFragment());
                     return true;
             }
             return false;
@@ -47,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         toolbar = getSupportActionBar();
+        toolbar.setTitle("Meeting Schedule");
+        toolbar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#D74E09")));
         loadFragment(new HomeFragment());
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -80,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements
 
         }
     }
+
 
     private void loadFragment(Fragment fragment) {
         // load fragment

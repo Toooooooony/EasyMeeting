@@ -4,6 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +29,9 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    ViewPager viewPager;
+    ViewPagerAdapter viewPagerAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,7 +70,11 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.view_pager_normal, container, false);
+        viewPager = view.findViewById(R.id.viewpager_n);
+        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+        viewPager.setAdapter(viewPagerAdapter);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,5 +114,39 @@ public class HomeFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public static class ViewPagerAdapter extends FragmentStatePagerAdapter {
+        private static final int NUM_ITEMS = 2;
+
+        public ViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_ITEMS;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if(position == 0){
+                return PendingNormalFragment.newInstance();
+            }
+            else {
+                return PreviousNormalFragment.newInstance();
+            }
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            if(position == 0){
+                return "Pending Meetings";
+            }
+            else {
+                return "Previous Meetings";
+            }
+        }
     }
 }

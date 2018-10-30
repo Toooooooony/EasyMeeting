@@ -4,6 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +15,19 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DashboardFragment.OnFragmentInteractionListener} interface
+ * {@link HostFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link DashboardFragment#newInstance} factory method to
+ * Use the {@link HostFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardFragment extends Fragment {
+public class HostFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    ViewPager viewPager;
+    HostFragment.ViewPagerAdapter viewPagerAdapter;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -29,7 +35,7 @@ public class DashboardFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public DashboardFragment() {
+    public HostFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +45,11 @@ public class DashboardFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DashboardFragment.
+     * @return A new instance of fragment HostFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DashboardFragment newInstance(String param1, String param2) {
-        DashboardFragment fragment = new DashboardFragment();
+    public static HostFragment newInstance(String param1, String param2) {
+        HostFragment fragment = new HostFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,7 +70,11 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View view = inflater.inflate(R.layout.view_pager_manager, container, false);
+        viewPager = view.findViewById(R.id.viewpager_m);
+        viewPagerAdapter = new HostFragment.ViewPagerAdapter(getChildFragmentManager());
+        viewPager.setAdapter(viewPagerAdapter);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,5 +114,39 @@ public class DashboardFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public static class ViewPagerAdapter extends FragmentStatePagerAdapter {
+        private static final int NUM_ITEMS = 2;
+
+        public ViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_ITEMS;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if(position == 0){
+                return PendingManagerFragment.newInstance();
+            }
+            else {
+                return PreviousManagerFragment.newInstance();
+            }
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            if(position == 0){
+                return "Pending Meetings";
+            }
+            else {
+                return "Previous Meetings";
+            }
+        }
     }
 }
